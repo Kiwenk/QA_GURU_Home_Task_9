@@ -5,6 +5,10 @@ from selenium import webdriver
 
 
 @pytest.fixture(autouse=True)
+def base_url():
+    browser.config.base_url = 'https://demoqa.com'
+
+@pytest.fixture(autouse=True)
 def browser_management():
     driver_options = webdriver.ChromeOptions()
     driver_options.add_argument('--headless')
