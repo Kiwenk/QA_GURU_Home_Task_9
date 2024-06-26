@@ -27,13 +27,6 @@ def test_student_registration_form():
     browser.element("#react-select-4-input").type("Karnal").press_enter()
     browser.element("#submit").click()
     browser.element('#example-modal-sizes-title-lg').should(have.text('Thanks for submitting the form'))
-    browser.element('.table').all('td').even.should(have.exact_texts('Ivan Ivanov',
-                                                                     'IvanIvanov@test.com',
-                                                                     'Other',
-                                                                     '1616161616',
-                                                                     '25 June,2024',
-                                                                     'Social Studies',
-                                                                     'Sports, Music',
-                                                                     'pic.png',
-                                                                     'Kyoto, Pushkin Street, 16',
-                                                                     'Haryana Karnal'))
+    browser.element('.table').all('td').even.should(
+        have.exact_texts('Ivan Ivanov', 'IvanIvanov@test.com', 'Other', '1616161616', '16 June,2007', 'Chemistry',
+                         'Sports, Music', 'pic.jpg', 'Kyoto, Pushkin Street, 16', 'Haryana Karnal'))
