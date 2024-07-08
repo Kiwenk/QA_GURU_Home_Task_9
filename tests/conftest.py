@@ -7,6 +7,7 @@ from selenium import webdriver
 def base_url():
     browser.config.base_url = 'https://demoqa.com'
 
+
 @pytest.fixture(autouse=True)
 def browser_management():
     driver_options = webdriver.ChromeOptions()

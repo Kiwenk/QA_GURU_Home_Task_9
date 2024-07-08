@@ -1,11 +1,11 @@
 from selene import browser, have
 import os
-from users import User
+from modules.users import User
 
 
 class Registration_form:
-    def open(self, url):
-        browser.open(f'/{url}')
+    def open(self):
+        browser.open('https://demoqa.com/automation-practice-form/') #фикстура base_url не используется. Выдаёт ошибку
 
     def first_name(self, name):
         browser.element('#firstName').type(name)
@@ -59,8 +59,10 @@ class Registration_form:
             f'{user.email}',
             f'{user.gender}',
             f'{user.phone}',
+            f'{user.birthday}',
             f'{user.subject}',
             f'{user.hobbies}',
+            f'{user.photo}',
             f'{user.address}',
             f'{user.state} {user.city}'))
 
