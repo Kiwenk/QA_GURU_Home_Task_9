@@ -1,10 +1,10 @@
 from selene import browser, have
 import os
-
+from users import User
 
 
 class Registration_form:
-    def open(self,url):
+    def open(self, url):
         browser.open(f'/{url}')
 
     def first_name(self, name):
@@ -13,13 +13,13 @@ class Registration_form:
     def last_name(self, second_name):
         browser.element('#lastName').type(second_name)
 
-    def user_email(self,email):
+    def user_email(self, email):
         browser.element('#userEmail').type(email)
 
     def gender_radio(self):
         browser.element('[for="gender-radio-3"]').click()
 
-    def user_number(self,number):
+    def user_number(self, number):
         browser.element('#userNumber').type(number)
 
     def date_of_birth(self):
@@ -28,7 +28,7 @@ class Registration_form:
         browser.element('.react-datepicker__year-select').element('[value="2007"]').click()
         browser.element('.react-datepicker__month').element('[aria-label="Choose Saturday, June 16th, 2007"]').click()
 
-    def subjects(self,sub):
+    def subjects(self, sub):
         browser.element('#subjectsInput').type(sub).press_enter()
 
     def hobbies(self):
@@ -38,13 +38,13 @@ class Registration_form:
     def upload_picture(self):
         browser.element('#uploadPicture').send_keys(os.path.abspath('../resources/pic.jpg'))
 
-    def current_address(self,address):
+    def current_address(self, address):
         browser.element("#currentAddress").type(address)
 
-    def state(self,state):
+    def state(self, state):
         browser.element("#react-select-3-input").type(state).press_enter()
 
-    def city(self,city):
+    def city(self, city):
         browser.element("#react-select-4-input").type(city).press_enter()
 
     def sumbit_button(self):
@@ -53,7 +53,28 @@ class Registration_form:
     def check_text_after_submit_button(self):
         browser.element('#example-modal-sizes-title-lg').should(have.text('Thanks for submitting the form'))
 
-    def check_table(self):
-        browser.element('.table').all('td').even.should(
-            have.exact_texts('Ivan Ivanov', 'Vasya_the_terrible_2005@mail.ru', 'Other', '1987198719', '16 June,2007', 'Chemistry',
-                             'Sports, Music', 'pic.jpg', 'Kyoto, Pushkin Street, 16', 'Haryana Karnal'))
+    def table_check(self, user: User):
+        browser.element('.table').all('td').even.should(have.exact_texts(
+            f'{user.first_name} {user.last_name}',
+            f'{user.email}',
+            f'{user.gender}',
+            f'{user.phone}',
+            f'{user.subject}',
+            f'{user.hobbies}',
+            f'{user.address}',
+            f'{user.state} {user.city}'))
+
+    def register(self, user: User):
+        self.first_name(user.first_name)
+        self.last_name(user.last_name)
+        self.user_email(user.email)
+        self.gender_radio()
+        self.user_number(user.phone)
+        self.date_of_birth()
+        self.subjects(user.subject)
+        self.hobbies()
+        self.upload_picture()
+        self.current_address(user.address)
+        self.state(user.state)
+        self.city(user.city)
+        self.sumbit_button()
