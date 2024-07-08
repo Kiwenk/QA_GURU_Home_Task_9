@@ -1,28 +1,21 @@
-from selene import browser, have
-import os
+from modules.registration_from import Registration_form
 
 
 def test_student_registration_form():
-    browser.open('/automation-practice-form')
-    browser.should(have.title('DEMOQA'))
-    browser.element('#firstName').type('Ivan')
-    browser.element('#lastName').type('Ivanov')
-    browser.element('#userEmail').type('IvanIvanov@test.com')
-    browser.element('[for="gender-radio-3"]').click()
-    browser.element('#userNumber').type('1616161616')
-    browser.element('.react-datepicker__input-container').click()
-    browser.element('.react-datepicker__month-select').element('[value="5"]').click()
-    browser.element('.react-datepicker__year-select').element('[value="2007"]').click()
-    browser.element('.react-datepicker__month').element('[aria-label="Choose Saturday, June 16th, 2007"]').click()
-    browser.element('#subjectsInput').type('Che').press_enter()
-    browser.element('[for="hobbies-checkbox-1"]').click()
-    browser.element('[for="hobbies-checkbox-3"]').click()
-    browser.element('#uploadPicture').send_keys(os.path.abspath('pic.jpg'))
-    browser.element("#currentAddress").type("Kyoto, Pushkin Street, 16")
-    browser.element("#react-select-3-input").type("Haryana").press_enter()
-    browser.element("#react-select-4-input").type("Karnal").press_enter()
-    browser.element("#submit").click()
-    browser.element('#example-modal-sizes-title-lg').should(have.text('Thanks for submitting the form'))
-    browser.element('.table').all('td').even.should(
-        have.exact_texts('Ivan Ivanov', 'IvanIvanov@test.com', 'Other', '1616161616', '16 June,2007', 'Chemistry',
-                         'Sports, Music', 'pic.jpg', 'Kyoto, Pushkin Street, 16', 'Haryana Karnal'))
+    form_action = Registration_form()
+    form_action.open('automation-practice-form')
+    form_action.first_name('Ivan')
+    form_action.last_name('Ivanov')
+    form_action.user_email('Vasya_the_terrible_2005@mail.ru')
+    form_action.gender_radio()
+    form_action.user_number('1987198719')
+    form_action.date_of_birth()
+    form_action.subjects('Che')
+    form_action.hobbies()
+    form_action.upload_picture()
+    form_action.current_address("Kyoto, Pushkin Street, 16")
+    form_action.state('Haryana')
+    form_action.city('Karnal')
+    form_action.sumbit_button()
+    form_action.check_text_after_submit_button()
+    form_action.check_table()
