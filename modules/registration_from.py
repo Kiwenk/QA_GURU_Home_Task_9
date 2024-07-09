@@ -3,8 +3,8 @@ from pathlib import Path
 
 
 class RegistrationForm:
-    def open(self, url):
-        browser.open(f'/{url}')
+    def open(self,):
+        browser.open('/automation-practice-form')
 
     def first_name(self, name):
         browser.element('#firstName').type(name)
@@ -27,7 +27,7 @@ class RegistrationForm:
         browser.element('.react-datepicker__year-select').type('2007')
         browser.element(
             f'.react-datepicker__day--0{16}:not(.react-datepicker__day--outside-month)'
-        ).click()  # одолжил у коллег
+        ).click()
 
     def subjects(self, sub):
         browser.element('#subjectsInput').type(sub).press_enter()

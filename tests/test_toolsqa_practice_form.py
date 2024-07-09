@@ -3,7 +3,7 @@ from modules.registration_from import RegistrationForm
 
 def test_student_registration_form():
     form_action = RegistrationForm()
-    form_action.open('automation-practice-form')
+    form_action.open()
     form_action.first_name('Ivan')
     form_action.last_name('Ivanov')
     form_action.user_email('Vasya_the_terrible_2005@mail.ru')
