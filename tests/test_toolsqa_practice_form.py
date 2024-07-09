@@ -1,9 +1,9 @@
-from modules.registration_from import Registration_form
+from modules.registration_from import RegistrationForm
 from modules.users import User
 
 
 def test_student_registration_form():
-    form_action = Registration_form()
+    form_action = RegistrationForm()
     human_being = User(first_name='Ivan',
                        last_name='Ivanov',
                        email='Vasya_the_terrible_2005@mail.ru',

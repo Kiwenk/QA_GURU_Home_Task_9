@@ -3,13 +3,10 @@ import pytest
 from selenium import webdriver
 
 
-@pytest.fixture(autouse=True)
-def base_url():
-    browser.config.base_url = 'https://demoqa.com'
-
 
 @pytest.fixture(autouse=True)
 def browser_management():
+    browser.config.base_url = 'https://demoqa.com/' #исправил
     driver_options = webdriver.ChromeOptions()
     driver_options.add_argument('--headless')
     browser.config.driver_options = driver_options

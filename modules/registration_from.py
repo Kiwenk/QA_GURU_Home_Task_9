@@ -1,11 +1,11 @@
 from selene import browser, have
-import os
 from modules.users import User
+from pathlib import Path
 
 
-class Registration_form:
+class RegistrationForm:
     def open(self):
-        browser.open('https://demoqa.com/automation-practice-form/') #фикстура base_url не используется. Выдаёт ошибку
+        browser.open('automation-practice-form')  # исправил. С rc7 selene не работало почему то. Сейчас норм (rc2)
 
     def first_name(self, name):
         browser.element('#firstName').type(name)
@@ -23,10 +23,13 @@ class Registration_form:
         browser.element('#userNumber').type(number)
 
     def date_of_birth(self):
-        browser.element('.react-datepicker__input-container').click()
-        browser.element('.react-datepicker__month-select').element('[value="5"]').click()
-        browser.element('.react-datepicker__year-select').element('[value="2007"]').click()
-        browser.element('.react-datepicker__month').element('[aria-label="Choose Saturday, June 16th, 2007"]').click()
+        browser.element('#dateOfBirthInput').click()
+        browser.element('.react-datepicker__month-select').type('June')
+        browser.element('.react-datepicker__year-select').type('2007')
+        browser.element(
+            f'.react-datepicker__day--0{16}:not(.react-datepicker__day--outside-month)'
+        ).click()  # одолжил у коллег. Так работает)
+        # browser.element('.react-datepicker__month').element('[aria-label="Choose Saturday, June 16th, 2007"]').click() у меня валится на таймауте, потому что не может найти элемент.
 
     def subjects(self, sub):
         browser.element('#subjectsInput').type(sub).press_enter()
@@ -35,8 +38,9 @@ class Registration_form:
         browser.element('[for="hobbies-checkbox-1"]').click()
         browser.element('[for="hobbies-checkbox-3"]').click()
 
-    def upload_picture(self):
-        browser.element('#uploadPicture').send_keys(os.path.abspath('../resources/pic.jpg'))
+    def upload_picture(self, photo):
+        browser.element('#uploadPicture').send_keys(
+            str(Path(__file__).parent.parent.joinpath(f'resources/{photo}')))  # исправил
 
     def current_address(self, address):
         browser.element("#currentAddress").type(address)
@@ -75,7 +79,7 @@ class Registration_form:
         self.date_of_birth()
         self.subjects(user.subject)
         self.hobbies()
-        self.upload_picture()
+        self.upload_picture(user.photo)
         self.current_address(user.address)
         self.state(user.state)
         self.city(user.city)
